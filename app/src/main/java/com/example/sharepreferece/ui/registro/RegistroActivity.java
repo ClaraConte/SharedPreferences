@@ -38,18 +38,27 @@ public class RegistroActivity extends AppCompatActivity {
         password = findViewById(R.id.etPass);
         register = findViewById(R.id.btGuardar);
 
+        final Observer<Usuario> observer = new Observer<Usuario>() {
+            @Override
+            public void onChanged(Usuario usuario) {
+                if(usuario != null) {
+                    dni.setText(usuario.getDni()+"");
+                    nombre.setText(usuario.getNombre());
+                    apellido.setText(usuario.getApellido());
+                    email.setText(usuario.getEmail());
+                    password.setText(usuario.getPassword());
+                }
+            }
+        };
+
+        viewModelRegistro.getMLDUsuario().observe(this, observer);
+
         Intent i = getIntent();
         String dato = i.getStringExtra("editar");
 
-
-        if( dato.equals("1")){
-
-           // Usuario usuario = viewModelRegistro.leerDatos(getApplicationContext());
-
-            Toast.makeText(getApplicationContext(),"Datos " + dato,Toast.LENGTH_LONG).show();
-
+        if(dato.equals("1")){
+            viewModelRegistro.leerDatos(getApplicationContext());
         }
-
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,15 +73,7 @@ public class RegistroActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Datos guardados",Toast.LENGTH_LONG).show();
             }
         });
-        final Observer<Usuario> userObserver = new Observer<Usuario>() {
-            @Override
-            public void onChanged(Usuario usuario) {
 
-            }
-        };
-
-        viewModelRegistro.getMLDUsuario().observe(this, userObserver);
     }
-
 
 }
