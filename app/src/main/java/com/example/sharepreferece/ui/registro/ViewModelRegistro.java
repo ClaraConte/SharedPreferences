@@ -29,9 +29,7 @@ public class ViewModelRegistro extends ViewModel {
 
     public  void  leerDatos(Context context){
 
-        Usuario user ;
-        user = new Usuario();
-        user  = ApiClient.leer(context);
+        Usuario user = ApiClient.leer(context);
         mldUsuario.setValue(user);
 
     }

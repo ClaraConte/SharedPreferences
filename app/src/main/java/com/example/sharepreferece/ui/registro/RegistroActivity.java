@@ -64,16 +64,25 @@ public class RegistroActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Usuario usuario = new Usuario();
-                usuario.setDni(Long.parseLong(dni.getText().toString()));
                 usuario.setNombre(nombre.getText().toString());
                 usuario.setApellido(apellido.getText().toString());
-                usuario.setEmail(email.getText().toString());
-                usuario.setPassword(password.getText().toString());
-                viewModelRegistro.cargarDatos(getApplicationContext(),usuario);
-                Toast.makeText(getApplicationContext(),"Datos guardados",Toast.LENGTH_LONG).show();
+                if(dni.getText().toString().length() == 0){
+                    Toast.makeText(getApplicationContext()," Dni no pueden estar vacio",Toast.LENGTH_LONG).show();
+                }
+                else if(email.getText().toString().length() == 0){
+                    Toast.makeText(getApplicationContext()," Email no pueden estar vacio",Toast.LENGTH_LONG).show();
+                }else if(password.getText().toString().length() == 0){
+                    Toast.makeText(getApplicationContext()," Password no pueden estar vacio",Toast.LENGTH_LONG).show();
+                }
+                else{
+                    usuario.setDni(Long.parseLong(dni.getText().toString()));
+                    usuario.setEmail(email.getText().toString());
+                    usuario.setPassword(password.getText().toString());
+                    viewModelRegistro.cargarDatos(getApplicationContext(),usuario);
+                    Toast.makeText(getApplicationContext(),"Datos guardados",Toast.LENGTH_LONG).show();
+                }
             }
         });
-
     }
 
 }
